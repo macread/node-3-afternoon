@@ -4,7 +4,14 @@ const express = require('express')
     , session = require('express-session')
 
 const {SERVER_PORT, SESSION_SECRET} = process.env;
-const checkForSession = require('./middlewares/checkForSession')
+
+// Middleware
+const checkForSession = require('./middlewares/checkForSession');
+
+
+// Controllers
+const swag_controller = require('./controllers/swag_controller.js');
+
 const app = express();
 
 app.use(bodyParser.json())
@@ -15,6 +22,8 @@ app.use(session({
 }))
 
 app.use(checkForSession);
+
+app.get('/api/swag', swag_controller.read )
 
 app.listen(SERVER_PORT, () => {
     console.log(`Listening on port: ${SERVER_PORT}`)
